@@ -76,6 +76,10 @@ const configService = new ConfigService(process.env).ensureValues([
 
   //Verification
   'VERIFICATION_CODE_VALIDITY',
+
+  //Paystack
+  'PAYSTACK_BASE_URL',
+  'PAYSTACK_SECRET_KEY',
 ]);
 
 export { configService };
