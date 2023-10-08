@@ -1,5 +1,6 @@
 import { ResponseCode } from 'src/enum/ResponseCode.enum';
 import { AuthRes } from 'src/models/AuthRes.model';
+import { Res } from 'src/models/Res.model';
 
 export const MESSAGES = {
   ACCOUNT_CREATED_SUCCESSFULLY:
@@ -53,5 +54,15 @@ export const AUTHRESFAILED = (MESSAGE, CODE) => {
     status: false,
     code: ResponseCode[CODE],
   };
+  return res;
+};
+
+export const RES = (MESSAGE, CODE, STATUS, DATA?) => {
+  const res: Res = {
+    message: MESSAGES[MESSAGE],
+    status: STATUS,
+    code: ResponseCode[CODE],
+  };
+  if (DATA) res.data = DATA;
   return res;
 };

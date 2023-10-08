@@ -231,11 +231,9 @@ export class UsersRepository {
         return user;
       } else {
         this.logger.debug(
-          `Invalid Verification Code or Verification Code has expired, Filter: ${JSON.stringify(
-            {
-              email: user.email,
-            },
-          )}`,
+          `Invalid OTP or OTP has expired, Filter: ${JSON.stringify({
+            email: user.email,
+          })}`,
         );
         return null;
       }

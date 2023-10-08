@@ -8,6 +8,9 @@ import { UsersRepository } from 'src/repositories/Users.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersEntity } from 'src/entities/Users.entity';
+import { WalletsService } from '../wallets/wallets.service';
+import { WalletsRepository } from 'src/repositories/Wallets.repository';
+import { WalletsEntity } from 'src/entities/Wallets.entity';
 
 @Module({
   imports: [
@@ -18,10 +21,16 @@ import { UsersEntity } from 'src/entities/Users.entity';
         expiresIn: parseInt(configService.getValue('JWT_VALIDITY')),
       },
     }),
-    TypeOrmModule.forFeature([UsersEntity]),
+    TypeOrmModule.forFeature([UsersEntity, WalletsEntity]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersRepository, JwtStrategy],
+  providers: [
+    AuthService,
+    UsersRepository,
+    JwtStrategy,
+    WalletsService,
+    WalletsRepository,
+  ],
   exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}

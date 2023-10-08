@@ -15,6 +15,7 @@ import { UsersEntity } from 'src/entities/Users.entity';
 import { VerifyCodeDto } from './dto/verify-code.dto';
 import { ResendCodeDto } from './dto/resend-code.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { WalletsService } from '../wallets/wallets.service';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +24,7 @@ export class AuthService {
   constructor(
     private readonly users: UsersRepository,
     private jwtService: JwtService,
+    private walletsService: WalletsService,
   ) {}
 
   async signup(dto: SignupDto): Promise<AuthRes> {
@@ -63,6 +65,7 @@ export class AuthService {
       const res = INVALID_PARAMETER('EXPIRED_INVALID_CODE');
       return res;
     } else {
+      await this.walletsService.createWallet(user);
       const payload: JwtPayload = { email: user.email };
       const accessToken = await this.jwtService.sign(payload);
       this.logger.debug(
