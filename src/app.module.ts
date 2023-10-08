@@ -6,6 +6,7 @@ import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { TransferModule } from './modules/transfer/transfer.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
 import * as ORMConfig from './ormconfig';
 
 @Module({
@@ -17,6 +18,7 @@ import * as ORMConfig from './ormconfig';
     TerminusModule,
     AuthModule,
     TransferModule,
+    TransactionsModule,
   ],
 })
 export class AppModule {}

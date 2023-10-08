@@ -11,6 +11,7 @@ import {
 import { IsNotEmpty } from 'class-validator';
 import { UsersEntity } from './Users.entity';
 import { TransactionStatus } from 'src/enum/TransactionStatus.enum';
+import { TransactionType } from 'src/enum/TransactionType.enum';
 
 @Entity({ name: 'transactions' })
 export class TransactionsEntity extends BaseEntity {
@@ -55,6 +56,13 @@ export class TransactionsEntity extends BaseEntity {
     nullable: false,
   })
   transaction_status: string;
+
+  @Column({
+    type: 'enum',
+    enum: TransactionType,
+    nullable: false,
+  })
+  transaction_type: string;
 
   @Column({
     type: 'varchar',

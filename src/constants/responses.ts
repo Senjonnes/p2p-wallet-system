@@ -16,6 +16,7 @@ export const MESSAGES = {
     'Please check your email, a password reset OTP has been sent to you.',
   PASSWORD_NOT_MATCHED: 'Password does not match',
   PIN_CREATED_SUCCESSFULLY: 'Pin created successfully',
+  TRANSFER_SUCCESSFUL: 'Transfer successful',
 };
 
 export const INVALID_PARAMETER = (MESSAGE) => {

@@ -324,6 +324,19 @@ export class UsersRepository {
     }
   }
 
+  async validatePin(user: UsersEntity, pin: string): Promise<boolean> {
+    try {
+      const decrypt = crypto.decrypt(user.pin);
+      if (decrypt === pin) {
+        return true;
+      }
+      throw new BadRequestException('Invalid PIN');
+    } catch (error) {
+      this.logger.error(error, error.stack);
+      throw new InternalServerErrorException('Invalid PIN');
+    }
+  }
+
   private async loginFailed(dto: any, user: UsersEntity): Promise<any> {
     try {
       const accessLog = new AccessLogEntity();

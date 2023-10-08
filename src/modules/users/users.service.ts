@@ -36,6 +36,11 @@ export class UsersService {
     return res;
   }
 
+  async validatePin(user: UsersEntity, pin: string): Promise<boolean> {
+    const is_valid = await this.users.validatePin(user, pin);
+    return is_valid;
+  }
+
   private async setUserData(user: UsersEntity): Promise<Res> {
     const {
       id,
