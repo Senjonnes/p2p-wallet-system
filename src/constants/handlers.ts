@@ -11,3 +11,11 @@ export const titleCase = (val) => {
     return null;
   }
 };
+
+export const verificationCode = (): number => {
+  return Math.floor(100000 + Math.random() * 900000);
+};
+
+export const timeNowMilliseconds = (): number => {
+  return new Date(Date.now()).getTime();
+};

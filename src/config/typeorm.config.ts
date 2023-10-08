@@ -65,6 +65,17 @@ const configService = new ConfigService(process.env).ensureValues([
   //PATH STRUCTRUE
   'POSTGRES_ENTITIES',
   'POSTGRES_ENTITIES_DIR',
+
+  //Jwt
+  'JWT_SECRET',
+  'JWT_VALIDITY',
+
+  //Encryption
+  'ENCRYPTION_KEY',
+  'IV_LENGTH',
+
+  //Verification
+  'VERIFICATION_CODE_VALIDITY',
 ]);
 
 export { configService };

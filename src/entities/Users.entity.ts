@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { IsNotEmpty } from 'class-validator';
 import * as Handlers from '../constants/handlers';
 import { WalletsEntity } from './Wallets.entity';
@@ -78,6 +79,12 @@ export class UsersEntity extends BaseEntity {
   @Column()
   salt: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  verification_code: string;
+
+  @Column({ type: 'bigint', nullable: true })
+  verification_time: number;
+
   @OneToMany(() => AccessLogEntity, (access_log) => access_log.user, {
     eager: false,
   })
@@ -104,5 +111,10 @@ export class UsersEntity extends BaseEntity {
       this.last_name,
     )}`;
     return name;
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+    return hash === this.password;
   }
 }
