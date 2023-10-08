@@ -5,6 +5,7 @@ import { HealthModule } from './modules/health/health.module';
 import { TerminusModule } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
+import { TransferModule } from './modules/transfer/transfer.module';
 import * as ORMConfig from './ormconfig';
 
 @Module({
@@ -15,6 +16,7 @@ import * as ORMConfig from './ormconfig';
     HealthModule,
     TerminusModule,
     AuthModule,
+    TransferModule,
   ],
 })
 export class AppModule {}

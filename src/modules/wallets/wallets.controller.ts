@@ -13,9 +13,6 @@ export class WalletsController {
 
   @Get('/wallet')
   async getWallet(@GetUser() user: UsersEntity): Promise<Res> {
-    this.logger.log(
-      `Get wallet for "id": "${user.id}", Filter: WalletsController Controller`,
-    );
     return this.walletService.getWallet(user);
   }
 }

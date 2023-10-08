@@ -42,6 +42,13 @@ export class WalletsEntity extends BaseEntity {
   })
   reference: string;
 
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    length: 10,
+  })
+  wallet_id: string;
+
   @JoinColumn({ name: 'user_id' })
   @OneToOne(() => UsersEntity, (user) => user.wallet, {
     eager: false,

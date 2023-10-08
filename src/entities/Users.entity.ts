@@ -14,6 +14,7 @@ import { IsNotEmpty } from 'class-validator';
 import * as Handlers from '../constants/handlers';
 import { WalletsEntity } from './Wallets.entity';
 import { AccessLogEntity } from './AccessLogs.entity';
+import { TransactionsEntity } from './Transactions.entity';
 
 @Entity({ name: 'users' })
 export class UsersEntity extends BaseEntity {
@@ -85,6 +86,12 @@ export class UsersEntity extends BaseEntity {
   @Column({ type: 'bigint', nullable: true })
   verification_time: number;
 
+  @Column({ type: 'varchar', nullable: true })
+  pin: string;
+
+  @Column({ default: false })
+  has_pin: boolean;
+
   @OneToMany(() => AccessLogEntity, (access_log) => access_log.user, {
     eager: false,
   })
@@ -94,6 +101,11 @@ export class UsersEntity extends BaseEntity {
     eager: false,
   })
   wallet: WalletsEntity;
+
+  @OneToMany(() => TransactionsEntity, (transactions) => transactions.user, {
+    eager: false,
+  })
+  transactions: TransactionsEntity[];
 
   @BeforeInsert()
   public normalizeEmail(): void {

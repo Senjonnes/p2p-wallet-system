@@ -1,7 +1,9 @@
 import { UsersEntity } from 'src/entities/Users.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import * as crypto from '../constants/encrypt';
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -19,6 +21,7 @@ import { MESSAGES } from 'src/constants/responses';
 import { VerifyCodeDto } from 'src/modules/auth/dto/verify-code.dto';
 import { ResendCodeDto } from 'src/modules/auth/dto/resend-code.dto';
 import { ForgotPasswordDto } from 'src/modules/auth/dto/forgot-password.dto';
+import { CreatePinDto } from 'src/modules/users/dto/create-pin.dto';
 
 @Injectable()
 export class UsersRepository {
@@ -291,6 +294,34 @@ export class UsersRepository {
       }
     }
     return user;
+  }
+
+  async createPin(user: UsersEntity, dto: CreatePinDto): Promise<UsersEntity> {
+    const { pin, confirm_pin } = dto;
+
+    if (user.has_pin) {
+      throw new ConflictException('User already has PIN');
+    }
+
+    if (pin !== confirm_pin) {
+      throw new BadRequestException('Pin does not match');
+    }
+
+    user.has_pin = true;
+    user.pin = crypto.encrypt(pin);
+
+    try {
+      await this.users.save(user);
+      this.logger.debug(
+        `Pin created successfully, Filter: ${JSON.stringify({
+          email: user.email,
+        })}`,
+      );
+      return user;
+    } catch (error) {
+      this.logger.error(error, error.stack);
+      throw new InternalServerErrorException();
+    }
   }
 
   private async loginFailed(dto: any, user: UsersEntity): Promise<any> {

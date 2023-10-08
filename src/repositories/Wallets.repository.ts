@@ -26,6 +26,9 @@ export class WalletsRepository {
       wallet.balance = 0;
       wallet.previous_balance = 0;
       wallet.reference = new Date(Date.now()).getTime().toString();
+      wallet.wallet_id = (
+        Math.floor(Math.random() * 9000000000) + 1000000000
+      ).toString();
       wallet.user = user;
       try {
         await wallet.save();
